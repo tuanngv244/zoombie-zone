@@ -11,7 +11,6 @@ import {
   CASTLE_CONFIG,
   CASTLE_POSITIONS,
   EnemyType,
-  ARMY_UNIT_STATS,
   EnemyStats,
   WAVE_CONFIG,
   ZOMBIE_WAVE_COMPOSITIONS,
@@ -339,7 +338,7 @@ export class LocalGameEngine {
     const nextInvaderWave = this.currentInvaderWave + 1;
     
     // Check if invader wave should happen
-    const invaderWaveConfig = INVADER_WAVES.find(w => w.appearsAfterZombieWave === nextZombieWave);
+    const invaderWaveConfig: typeof INVADER_WAVES[0] | undefined = INVADER_WAVES.find((w) => w.appearsAfterZombieWave === nextZombieWave);
     
     if (invaderWaveConfig) {
       // Start invader wave
@@ -995,18 +994,27 @@ export class LocalGameEngine {
 
     switch (type) {
       case CastleUpgradeType.FortifyI:
-        castle.maxHp += config.hpBonus;
-        castle.hp += config.hpBonus;
+        {
+          const config = CASTLE_CONFIG.upgrades[CastleUpgradeType.FortifyI];
+          castle.maxHp += config.hpBonus;
+          castle.hp += config.hpBonus;
+        }
         break;
       case CastleUpgradeType.FortifyII:
-        castle.maxHp += config.hpBonus;
-        castle.hp += config.hpBonus;
+        {
+          const config = CASTLE_CONFIG.upgrades[CastleUpgradeType.FortifyII];
+          castle.maxHp += config.hpBonus;
+          castle.hp += config.hpBonus;
+        }
         break;
       case CastleUpgradeType.Treasury:
         // Gold bonus per kill handled elsewhere
         break;
       case CastleUpgradeType.Repair:
-        castle.hp = Math.min(castle.hp + config.hpRestore, castle.maxHp);
+        {
+          const config = CASTLE_CONFIG.upgrades[CastleUpgradeType.Repair];
+          castle.hp = Math.min(castle.hp + config.hpRestore, castle.maxHp);
+        }
         break;
     }
 
