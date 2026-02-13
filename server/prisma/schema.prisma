@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Player {
+  id           String         @id @default(uuid())
+  username     String         @unique
+  createdAt    DateTime       @default(now()) @map("created_at")
+  matchPlayers MatchPlayer[]
+  leaderboard  Leaderboard?
+
+  @@map("players")
+}
+
+model MatchHistory {
+  id           String         @id @default(uuid())
+  roomId       String         @map("room_id")
+  result       String
+  waveReached  Int            @map("wave_reached")
+  duration     Int
+  playedAt     DateTime       @default(now()) @map("played_at")
+  matchPlayers MatchPlayer[]
+
+  @@map("match_history")
+}
+
+model MatchPlayer {
+  id              String       @id @default(uuid())
+  matchId         String       @map("match_id")
+  playerId        String       @map("player_id")
+  kills           Int          @default(0)
+  goldEarned      Int          @default(0) @map("gold_earned")
+  buildingsPlaced Int          @default(0) @map("buildings_placed")
+  match           MatchHistory @relation(fields: [matchId], references: [id])
+  player          Player       @relation(fields: [playerId], references: [id])
+
+  @@map("match_players")
+}
+
+model Leaderboard {
+  id          String @id @default(uuid())
+  playerId    String @unique @map("player_id")
+  totalKills  Int    @default(0) @map("total_kills")
+  gamesWon    Int    @default(0) @map("games_won")
+  gamesPlayed Int    @default(0) @map("games_played")
+  player      Player @relation(fields: [playerId], references: [id])
+
+  @@map("leaderboard")
+}

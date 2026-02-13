@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx vite build:*)",
+      "Bash(docker compose up:*)",
+      "Bash(DATABASE_URL=\"postgresql://zombie:zombie_secret@localhost:5432/zombie_zone\" npx prisma migrate dev:*)",
+      "Bash(DATABASE_URL=\"postgresql://zombie:zombie_secret@localhost:5432/zombie_zone\" REDIS_URL=\"redis://localhost:6379\" npx tsx:*)",
+      "Bash(npx vite --host)",
+      "Bash(lsof:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)",
+      "Bash(npx tsx:*)",
+      "WebFetch(domain:www.opensource3dassets.com)",
+      "WebSearch",
+      "WebFetch(domain:poly.pizza)",
+      "WebFetch(domain:kenney.nl)",
+      "Bash(python3:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(kill:*)",
+      "Bash(xargs:*)",
+      "Bash(./node_modules/.bin/tsc:*)",
+      "Bash(npm run build)",
+      "Bash(node:*)"
+    ]
+  }
+}
